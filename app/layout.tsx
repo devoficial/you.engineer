@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://debasis-nath-engineer.debasis-96.chatgpt.site"),
+  metadataBase: new URL("https://debasisnath.netlify.app"),
   title: "Debasis Nath — Product Systems & AI-Enabled Workflows",
   description:
     "Senior software engineer building product platforms and AI-enabled workflows across Go, React, TypeScript, Agentic AI, and MCP.",
