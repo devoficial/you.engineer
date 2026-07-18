@@ -214,7 +214,15 @@ export default function Home() {
               A public roadmap and engineering journal spanning evaluated RAG,
               bounded agents, production ML, CUDA, TensorRT, and device-aware inference.
             </p>
-            <span className="project-index">A01</span>
+            <a
+              className="project-index"
+              href="https://edge-ai-journey.netlify.app/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the live AI Systems Engineering Journey"
+            >
+              A01 · LIVE ↗
+            </a>
           </article>
           <article className="lab-project">
             <div>

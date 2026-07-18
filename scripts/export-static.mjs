@@ -11,7 +11,7 @@ await cp(new URL("../dist/client/", import.meta.url), output, { recursive: true 
 
 const { default: worker } = await import(workerUrl.href);
 const response = await worker.fetch(
-  new Request("https://debasisnath.netlify.app/", {
+  new Request("https://debasisnath.com/", {
     headers: { accept: "text/html" },
   }),
   {
