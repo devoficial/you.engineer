@@ -1,0 +1,23 @@
+{
+  "id": "./",
+  "name": "Brain Garden",
+  "short_name": "Brain Garden",
+  "description": "Explore the brain through guided 3D body journeys and bilingual lessons.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f9fc",
+  "theme_color": "#ffffff",
+  "categories": ["education", "science"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "Explore anatomy", "url": "./#topic=anatomy&concept=frontal&lang=en"},
+    {"name": "Follow a sound", "url": "./#topic=sensory&concept=hearing&lang=en"},
+    {"name": "Brain rhythms", "url": "./#topic=frequencies&concept=alpha&lang=en"}
+  ]
+}
