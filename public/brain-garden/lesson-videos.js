@@ -1,5 +1,6 @@
 import {videoAuthors} from './video-credits.js';
 import {videos as regionVideos} from './content.js';
+import {hindiCoverage,hindiVideos} from './hindi-videos.js';
 const V=(id,title,author='Neuroscientifically Challenged',time=0)=>({id,title,author:videoAuthors[id]||author,time});
 export const lessonVideos={
  anatomy:V('ADAOsuaOSCk','Anatomy of the Brain','Ninja Nerd'),functional:V('1CCNldjSEXs','Frontal Lobe: Anatomy & Function','Ninja Nerd'),
@@ -34,7 +35,10 @@ export const videoOverrides={
  'functional/motor':V('APuiZCxDnTA','Motor Cortex'),'functional/prefrontal':V('i47_jiCsBMs','Prefrontal Cortex'),'functional/language':V('lBqShvm4QRA','Language and the Brain','Khan Academy')
 };
 export function videoFor(topic,item){
- if(topic.id==='anatomy'&&regionVideos[item.id]){const v=regionVideos[item.id];return V(v.id,v.en,v.author)}
- const video=videoOverrides[topic.id+'/'+item.id]||lessonVideos[topic.id];return {...video,time:item.time??video.time??0};
+ const hindi=hindiVideos[hindiCoverage[topic.id+'/'+item.id]];
+ // The old concept timestamps belong to the English video, not its replacement.
+ if(hindi)return {...hindi};
+ if(topic.id==='anatomy'&&regionVideos[item.id]){const v=regionVideos[item.id];return {...V(v.id,v.en,v.author),language:'en'}}
+ const video=videoOverrides[topic.id+'/'+item.id]||lessonVideos[topic.id];return {...video,time:item.time??video.time??0,language:'en'};
 }
 export function videoURL(video){return 'https://www.youtube.com/watch?v='+video.id+(video.time?'&t='+video.time+'s':'')}

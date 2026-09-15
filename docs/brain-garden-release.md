@@ -2,6 +2,19 @@
 
 Production target: https://debasisnath.com/brain-garden/ on the existing `debasisnath` Netlify site.
 
+## Focused experience and Hindi video update
+
+The main view now uses two compact selectors for topic and concept. Search and family filters open on demand. A lesson leads with its body/brain visual, playback controls and one current explanation. The full route, organ close-up, contextual notes and references use collapsed disclosures. Hearing response choices appear at the decision stage, where automatic playback pauses. Anatomy keeps its opaque, selectable surfaces and isolated view.
+
+All 211 concepts have video thumbnail previews and click-to-play embeds, plus a direct YouTube link. Fifty verified Hindi teaching videos cover 139 concepts; 72 concepts retain the existing English fallback. The language is shown on each card, independent of the English/Bengali interface. Coverage is explicit per concept, and existing English chapter offsets are never transferred to Hindi videos. See [video curation](brain-garden-hindi-videos.md) for sources and verification limits.
+
+Validation for this update:
+
+- Thirteen curriculum/pathway Node tests and two rendered portfolio tests pass; the static Netlify build succeeds.
+- The actual-GLTF/Linkedom integration harness passes all 1,599 stages and the new disclosure, search, video language, thumbnail failure and player lifecycle checks. No iframe exists before a click; selecting a different concept removes the old player.
+- Browser checks at 390 px, the existing 440 px panel, and 1280 px cover the responsive layout. English and Bengali fit without horizontal page overflow. Search reaches the Alpha lesson and returns keyboard focus to the search button. Hindi thumbnail loading and actual inline YouTube playback were visually verified; selecting another concept removes the player. Browser warning/error logs were empty during that check. Temporary viewport sizing was reset.
+- Public YouTube metadata resolves all 50 Hindi videos and reports them embeddable. This does not guarantee every future viewer can play every video; direct YouTube links remain available.
+
 ## Body–brain journey update
 
 The 33 groups outside anatomy now use a human-body pathway view as the primary lesson. Anatomy retains the existing opaque, selectable 3D model and isolated pieces. The 193 non-anatomy concepts use 51 shared journey templates with concept-specific variants; selecting a concept opens its relevant stage. Shared physiological segments are reused where appropriate rather than implying that every concept has a separate biological pathway.

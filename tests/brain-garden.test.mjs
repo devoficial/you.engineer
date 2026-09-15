@@ -4,10 +4,26 @@ import fs from 'node:fs';
 import {topics,resolveLesson,parseRoute,makeRoute,searchTopics} from '../public/brain-garden/topics.js';
 import {families,sources,lessonUI} from '../public/brain-garden/lessons/shared.js';
 import {videoFor,videoURL} from '../public/brain-garden/lesson-videos.js';
+import {hindiCoverage,hindiVideos} from '../public/brain-garden/hindi-videos.js';
+import {videoEmbedURL,videoThumbnail} from '../public/brain-garden/video-card.js';
 import {structureDescription} from '../public/brain-garden/structures.js';
 import {controlsFor,chartModel} from '../public/brain-garden/lesson-charts.js';
 import {waveSamples,spectrum,potentialSamples,lifSamples,synapseSamples,learningSamples,feedbackSamples,sleepAt} from '../public/brain-garden/simulations.js';
 const root=new URL('../public/brain-garden/',import.meta.url);
+test('Hindi preference covers explicit concepts; English fallback and video-specific timestamps remain correct',()=>{
+ const keys=new Set(topics.flatMap(t=>t.items.map(i=>t.id+'/'+i.id)));
+ for(const [key,id] of Object.entries(hindiCoverage)){assert(keys.has(key),key);assert(hindiVideos[id],id)}
+ for(const t of topics)for(const i of t.items){
+  const video=videoFor(t,i),hindi=hindiCoverage[t.id+'/'+i.id];
+  assert.equal(video.language,hindi?'hi':'en');if(hindi){assert.equal(video.id,hindi);assert.equal(video.time,0,'Never carry English chapter offsets to a Hindi video')}
+  assert.equal(new URL(videoThumbnail(video)).hostname,'i.ytimg.com');
+  const embed=new URL(videoEmbedURL(video));assert.equal(embed.hostname,'www.youtube-nocookie.com');assert.equal(embed.pathname,'/embed/'+video.id);
+ }
+ const memory=topics.find(t=>t.id==='memory'),working=memory.items.find(i=>i.id==='working');
+ assert.equal(videoFor(memory,working).time,264,'English working-memory chapter still starts at its correct offset');
+ assert.equal(videoFor({id:'sensory'},{id:'hearing',time:900}).id,'ysVxDvE5owc');
+ assert.equal(videoFor({id:'cranial'},{id:'xii',time:1800}).time,0);
+});
 test('All 34 groups and 211 concepts have bilingual content, visuals, sources and video links',()=>{
  assert.equal(topics.length,34);assert.deepEqual(topics.map(t=>t.number),Array.from({length:34},(_,i)=>i+1));assert.equal(new Set(topics.map(t=>t.id)).size,34);
  assert.equal(topics.reduce((n,t)=>n+t.items.length,0),211);

@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {GLTFLoader} from './vendor/GLTFLoader.js';
-import {regions,ui,videos,waves} from './content.js';
+import {regions,ui,waves} from './content.js';
+import {videoFor,videoURL} from './lesson-videos.js';
 import {initCurriculum,structureName} from './curriculum.js';
 let curriculum=null;
 const $=s=>document.querySelector(s);
@@ -22,7 +23,7 @@ function labels(){
  if(!state.ready)$('#loading').textContent=t(state.error||'loading');
  document.querySelectorAll('[data-region]').forEach(e=>{const r=regions.find(r=>r.id===e.dataset.region);e.querySelector('.region-text').textContent=r[state.lang][0];e.setAttribute('aria-pressed',state.selected===r.id)});
  const r=selected(),text=r[state.lang];$('#notes').style.setProperty('--color',r.color);$('#note-dot').style.background=r.color;$('#note-index').textContent=t('number')+' '+new Intl.NumberFormat(state.lang==='bn'?'bn-BD':'en',{minimumIntegerDigits:2}).format(regions.indexOf(r)+1);$('#region-name').textContent=text[0];$('#region-tag').textContent=text[1];$('#region-location').textContent=text[2];$('#region-function').textContent=text[3];$('#region-tip').textContent=text[4];
- const video=videos[r.id];$('#region-video').href='https://www.youtube.com/watch?v='+video.id;$('#video-title').textContent=video[state.lang];$('#video-meta').textContent=video.author+' · '+t('videoLanguage');$('#focus-title').textContent=state.meshFilter?structureName(state.meshFilter,state.lang):text[0];$('#focus-viewport').setAttribute('aria-label',t('focusLabel'));$('#wave-rows').replaceChildren(...waves[state.lang].map(row=>{const tr=document.createElement('tr');row.forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td)});return tr}));
+ const video=videoFor({id:'anatomy'},{id:r.id});$('#region-video').href=videoURL(video);$('#video-title').textContent=video.title;$('#video-meta').textContent=video.author+' · '+(video.language==='hi'?'Hindi':'English');$('#focus-title').textContent=state.meshFilter?structureName(state.meshFilter,state.lang):text[0];$('#focus-viewport').setAttribute('aria-label',t('focusLabel'));$('#wave-rows').replaceChildren(...waves[state.lang].map(row=>{const tr=document.createElement('tr');row.forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td)});return tr}));
  if(hover)tooltip.textContent=regions.find(r=>r.id===hover)[state.lang][0];
  curriculum?.setLanguage(state.lang);
 }
