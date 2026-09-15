@@ -12,7 +12,7 @@ test('every concept has a body-first journey and bilingual, paced guidance',()=>
   assert(journey.steps.length>1,`${topic.id}/${concept.id}`);
   for(const lang of ['en','bn'])assert(guideIntro(journey,lang).length>30);
   for(const step of journey.steps){
-   assert(b[step.body],step.id);assert(simpleSteps[step.id]||step.id==='anatomy-part',step.id);
+   assert(b[step.body],step.id);assert(step.guide||simpleSteps[step.id]||step.id==='anatomy-part',step.id);
    for(const lang of ['en','bn']){const note=guideNote(journey,step,lang);assert(note.title.trim().length>0,`${topic.id}/${concept.id}/${step.id}`);assert(note.text.length>20);assert(stepSeconds(note)>=9&&stepSeconds(note)<=18);}
    if(step.route){const {points}=bodyRoute(step);assert(points.length>1);assert(points.flat().every(Number.isFinite));assert(points.some(p=>p.some((v,i)=>v!==points[0][i])));}
   }

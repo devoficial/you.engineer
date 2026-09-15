@@ -41,10 +41,10 @@ export class NeuroLab{
   if(!kind)return;
   this.lessonKey=journey.topic.id+'/'+journey.concept.id;
   if(lessonChanged){this.frequency=kind==='hearing'?1000:journey.concept.frequency||journey.topic.frequency||2;this.alignment=journey.concept.id==='synchronization'?.3:.85;this.$('.lab-experiments').open=false;this.clock=0;this.feature=0;this.viewFocus=null}
-  const changed=kind!==this.kind;this.kind=kind;
+  const changed=kind!==this.kind||(kind==='bci'&&lessonChanged);this.kind=kind;
   if(changed&&!this.failed){this.clear();this.group=new THREE.Group();this.scene.add(this.group);this[kind]();this.contextBrain();this.reset()}
   if(!this.failed)this.highlightContext();
-  this.translate(lang);this.updateParameters();if(stageChanged){const focus={population:0,'timing-alignment':0,'volume-field':1,'eeg-record':2,analyze:2,sound:0,ossicles:0,hair:1,'auditory-nerve':2,membrane:0,'axon-spike':1,'sensory-axon':1,synaptic:0,integration:2,modulator:1,'plastic-change':2,light:0,optic:2,'clock-retina':1,'hand-muscle':1,'neck-motor':0,turn:2,arterial:0,venous:0,bbb:2,crh:1,acth:1,cortisol:1};this.selectFeature(focus[step.id]??0,true)}
+  this.translate(lang);this.updateParameters();if(stageChanged){const focus={'implant-record':0,decoder:1,prosthetic:2,'bci-feedback':2,population:0,'timing-alignment':0,'volume-field':1,'eeg-record':2,analyze:2,sound:0,ossicles:0,hair:1,'auditory-nerve':2,membrane:0,'axon-spike':1,'sensory-axon':1,synaptic:0,integration:2,modulator:1,'plastic-change':2,light:0,optic:2,'clock-retina':1,'hand-muscle':1,'neck-motor':0,turn:2,arterial:0,venous:0,bbb:2,crh:1,acth:1,cortisol:1};this.selectFeature(focus[step.id]??0,true)}
  }
  setActive(value){this.active=value&&this.available;if(value)this.resize();else this.last=0}
  clear(){
@@ -89,6 +89,47 @@ export class NeuroLab{
   this.annotate('Pyramidal-cell population','পিরামিডাল কোষসমষ্টি',V(-2.4,.7,.8),0,'Many aligned dendrites contribute postsynaptic currents. The cells here represent a much larger cortical population.','অনেক একই দিকে থাকা ডেনড্রাইট পোস্টসিন্যাপটিক প্রবাহে অংশ নেয়। এখানকার কোষ অনেক বড় কোষসমষ্টির প্রতিনিধি।');
   this.annotate('Fields through tissue','টিস্যু দিয়ে বৈদ্যুতিক ক্ষেত্র',V(-.55,1.78,.7),1,'The electric field spreads through brain tissue, CSF, skull and scalp. The arcs indicate field coupling, not axons or flowing transmitter.','বৈদ্যুতিক ক্ষেত্র মস্তিষ্কের টিস্যু, সিএসএফ, খুলি ও ত্বক দিয়ে ছড়ায়। রেখাগুলো ক্ষেত্র বোঝায়, অ্যাক্সন বা রাসায়নিকের প্রবাহ নয়।');
   this.annotate('A − reference','A − রেফারেন্স',V(2.4,1.7,.2),2,'An amplifier records a voltage difference between electrodes. Synchrony and geometry affect the summed signal; frequency alone does not determine its size.','অ্যামপ্লিফায়ার ইলেকট্রোডের ভোল্টেজের পার্থক্য মাপে। সমলয়তা ও গঠন যোগফলে প্রভাব ফেলে; শুধু কম্পাঙ্ক দিয়ে আকার নির্ধারিত হয় না।');
+ }
+ bci(){
+  const eeg=this.journey.concept.id==='eeg-interface';this.bciSensor=eeg?'scalp':'implanted';
+  this.mesh(new THREE.BoxGeometry(1.85,.16,1.1),mat('#dfb8ac'),V(-2.25,-.47,0),0);
+  for(let i=0;i<5;i++)this.neuronalTree(V(-2.95+i*.34,-.16,(i%2-.5)*.4),.38,0);
+  if(eeg){
+   this.mesh(new THREE.BoxGeometry(1.95,.13,1.15),mat('#e5d9c7',{transparent:true,opacity:.65}),V(-2.25,.63,0),0);
+   for(const x of [-2.8,-2.25,-1.7])this.mesh(new THREE.CylinderGeometry(.12,.15,.09,24),mat('#338f9f',{metalness:.5}),V(x,.75,.10),0);
+  }else{
+   this.mesh(new THREE.BoxGeometry(1.2,.09,.72),mat('#2f7483',{metalness:.45}),V(-2.25,.68,0),0);
+   for(let x=0;x<4;x++)for(let z=0;z<3;z++)this.mesh(new THREE.CylinderGeometry(.018,.011,.54,10),mat('#c9d8e0',{metalness:.7,roughness:.24}),V(-2.7+x*.30,.38,-.25+z*.25),0);
+  }
+  const lead=this.tube([V(-1.68,.73,0),V(-1.1,.94,0),V(-.76,.53,.05),V(-.43,.50,.06)],.025,C.signal,0);this.flow(lead.curve,{count:5,radius:.04,speed:.23});
+  this.mesh(new THREE.BoxGeometry(1.1,1.22,.44),mat('#a8bdca',{metalness:.35}),V(.1,.15,0),1);
+  this.mesh(new THREE.BoxGeometry(.93,.82,.025),mat('#214354'),V(.1,.24,.235),1);
+  const bars=[];for(let i=0;i<3;i++)bars.push(this.mesh(new THREE.BoxGeometry(.65,.09,.03),mat(['#66c4ca','#e0b86d','#b6a7dd'][i],{emissive:'#163c45',emissiveIntensity:.2}),V(.07,.48-i*.23,.27),1));
+  for(const x of [-.25,0,.25])this.mesh(new THREE.SphereGeometry(.035,12,8),mat('#65c9bc',{emissive:'#208779',emissiveIntensity:.4}),V(x,-.33,.245),1);
+  const output=this.tube([V(.65,.16,0),V(1.15,.1,.05),V(1.55,-.9,.1),V(2.4,-.9,0)],.029,'#d99e4c',1);this.flow(output.curve,{count:4,radius:.045,speed:.18,color:'#d99e4c'});
+  const hand=new THREE.Group();hand.position.set(2.4,-.15,0);hand.rotation.y=-.3;this.group.add(hand);
+  this.mesh(new THREE.BoxGeometry(.75,.9,.28),mat('#c7d5df',{metalness:.45,roughness:.3}),V(0,0,0),2,hand);
+  this.mesh(new THREE.BoxGeometry(.59,.62,.035),mat('#477b8e',{metalness:.4}),V(0,0,.16),2,hand);
+  this.mesh(new THREE.CylinderGeometry(.24,.22,.30,28),mat('#718fa1',{metalness:.5}),V(0,-.60,0),2,hand);
+  const joints=[];for(let finger=0;finger<5;finger++){
+   let parent=hand;const lengths=finger===4?[.30,.25]:[.37+(finger===1?.06:0),.27,.19];
+   for(let segment=0;segment<lengths.length;segment++){
+    const joint=new THREE.Group();parent.add(joint);joint.position.copy(segment?V(0,lengths[segment-1],0):finger===4?V(-.39,-.12,.04):V(-.27+finger*.18,.45,0));if(finger===4&&segment===0)joint.rotation.z=.85;
+    this.mesh(new THREE.SphereGeometry(.075,16,12),mat('#456575',{metalness:.55}),V(),2,joint);
+    this.mesh(new THREE.CapsuleGeometry(.068,Math.max(.02,lengths[segment]-.14),5,12),mat('#c9d8e1',{metalness:.55,roughness:.27}),V(0,lengths[segment]/2,0),2,joint);
+    joints.push({joint,segment});parent=joint;
+   }
+  }
+  this.animations.push(t=>{
+   // Fixed toy weights make the connection between input features and motion visible.
+   const features=[.5+.5*Math.sin(t*.75),.5+.5*Math.sin(t*.75-.7),.5+.5*Math.sin(t*.75+.45)];
+   const command=clamp(.65*features[0]-.2*features[1]+.55*features[2],0,1);this.bciState={features,command};
+   bars.forEach((m,i)=>{m.scale.x=.1+.9*features[i];m.position.x=-.26+.325*m.scale.x});
+   for(const {joint,segment} of joints)joint.rotation.x=command*(segment===0?1.0:1.25);
+  });
+  this.annotate(eeg?'Scalp recording electrodes':'Cortical recording array',eeg?'মাথার ত্বকের ইলেকট্রোড':'কর্টেক্সের রেকর্ডিং অ্যারে',V(-2.3,.99,.2),0,eeg?'Scalp electrodes measure voltage differences. The signals mix population activity and require careful processing.':'An implanted electrode array samples local neural activity. This example shows recording rather than stimulation.',eeg?'ত্বকের ইলেকট্রোড ভোল্টেজের পার্থক্য মাপে। এতে কোষসমষ্টির কাজ মেশে এবং যত্ন করে প্রক্রিয়া করতে হয়।':'প্রতিস্থাপিত ইলেকট্রোড স্থানীয় স্নায়ুর কাজ মাপে। এখানে রেকর্ডিং দেখানো, উদ্দীপনা দেওয়া নয়।');
+  this.annotate('Patterns → a device command','ধরন → যন্ত্রের নির্দেশ',V(.1,.89,.3),1,'A decoder combines selected features into a command. In real systems it is calibrated from examples; the three bars and fixed weights here are illustrative.','ডিকোডার বৈশিষ্ট্য মিলিয়ে নির্দেশ তৈরি করে। আসল ব্যবস্থায় উদাহরণ দিয়ে ক্যালিব্রেট করা হয়; এই তিন বার ও স্থির ওজন বোঝানোর জন্য।');
+  this.annotate('Electronics move the robotic hand','ইলেকট্রনিক নির্দেশে রোবট হাত নড়ে',V(2.4,1.45,.2),2,'An electronic controller drives the robotic fingers. Their motion follows this model’s decoded command; it does not travel through an arm motor nerve.','ইলেকট্রনিক কন্ট্রোলার রোবটের আঙুল চালায়। চলন মডেলের ডিকোড করা নির্দেশ অনুসরণ করে; বাহুর মোটর স্নায়ু দিয়ে যায় না।');
  }
  neuron(){
   const cell=this.neuronalTree(V(-2.05,.32,0),1.1,0);this.group.remove(cell.axon.mesh);this.objects=this.objects.filter(o=>o!==cell.axon.mesh);cell.axon.mesh.geometry.dispose();cell.axon.mesh.material.dispose();

@@ -5,6 +5,19 @@ import {topics} from '../public/brain-garden/topics.js';
 import {getJourney,journeys,branchSteps,pathwaySources,matchesStructure} from '../public/brain-garden/body/catalogue.js';
 import {bodyPoints,routes,organSVG} from '../public/brain-garden/body/art.js';
 const lesson=(topic,item)=>{const t=topics.find(t=>t.id===topic);return getJourney(t,t.items.find(i=>i.id===item))};
+test('optic-nerve detours are limited to the four explicitly visual lessons',()=>{
+ const visual=[];
+ for(const t of topics)for(const item of t.items){const j=getJourney(t,item);if(j?.steps.some(s=>s.id==='optic'))visual.push(t.id+'/'+item.id);}
+ assert.deepEqual(visual.sort(),['cranial/ii','functional/visual','language/reading','sensory/vision']);
+ for(const id of ['record','eeg-interface','implants','decoding','prosthetics']){
+  const j=lesson('bci',id);assert.equal(j.steps[0].id,'bci-intent');assert(!j.steps.some(s=>s.body==='eye'));assert(j.steps.some(s=>s.id==='decoder'));assert(j.steps.some(s=>s.id==='prosthetic'));assert.equal(j.steps.at(-1).id,'bci-feedback');
+ }
+ assert.equal(lesson('memory','episodic').steps[0].id,'hippocampal');
+ assert.equal(lesson('eeg','generation').steps[0].id,'population');
+ assert.equal(lesson('eeg','erp').steps[0].id,'sound');
+ assert(!lesson('sleep','nrem').steps.some(s=>s.body==='eye'));
+ assert.equal(lesson('hormones','melatonin').steps[0].id,'clock-retina');
+});
 test('Every non-anatomy concept has a complete bilingual body journey with valid waypoints and sources',()=>{
  let count=0;const b=fs.readFileSync(new URL('../public/brain-garden/brain.glb',import.meta.url));const gltf=JSON.parse(b.subarray(20,20+b.readUInt32LE(12)));const names=gltf.nodes.filter(n=>n.mesh!==undefined).map(n=>n.name);
  for(const t of topics)for(const item of t.items){const j=getJourney(t,item);if(t.id==='anatomy'){assert.equal(j,null);continue}count++;assert(j.steps.length>=2);assert(j.initialStep>=0&&j.initialStep<j.steps.length);for(const key of j.sources){assert(pathwaySources[key],`${t.id}: missing source ${key}`);assert.equal(new URL(pathwaySources[key][1]).protocol,'https:')}

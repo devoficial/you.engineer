@@ -13,10 +13,11 @@ export function mechanismFor(journey,step){
  if(id==='glial-support'||id==='sleep-muscles')return null;
  if(id==='spindle'||id==='proprioceptor')return 'spindle';
  if(id==='hair')return 'haircell';
- if(['frequencies','eeg'].includes(topic)||id==='population'||id==='eeg-record'||(topic==='imaging'&&journey.concept.id==='eeg'))return 'rhythm';
- if(id==='gap-junction'||(topic==='synapses'&&journey.concept.id==='electrical'))return 'gap';
- if(['synaptic','integration','modulator','plastic-change'].includes(id)||['synapses','chemistry'].includes(topic))return 'synapse';
- if(['membrane','axon-spike','sensory-axon','glial-support'].includes(id)||['neurons','electrical','computational'].includes(topic))return 'neuron';
+ if(topic==='bci'&&['implant-record','decoder','prosthetic','bci-feedback'].includes(id))return 'bci';
+ if(['population','timing-alignment','volume-field','eeg-record','analyze'].includes(id)||(id==='measurement'&&topic==='imaging'&&journey.concept.id==='eeg'))return 'rhythm';
+ if(id==='gap-junction')return 'gap';
+ if(['synaptic','integration','modulator','plastic-change'].includes(id))return 'synapse';
+ if(['membrane','axon-spike','sensory-axon'].includes(id))return 'neuron';
  if(['sound','ossicles','hair','auditory-nerve'].includes(id))return 'hearing';
  if(['light','retina','optic','clock-retina'].includes(id))return 'vision';
  if(['hand-muscle','neck-muscle','weak-movement','posture'].includes(id))return 'muscle';
@@ -26,6 +27,7 @@ export function mechanismFor(journey,step){
 }
 const T=(en,bn)=>({en,bn});
 export const labCopy={
+ bci:{title:T('A brain signal controls a device','মস্তিষ্কের সংকেত যন্ত্র চালায়'),scale:T('Recording → decoding → robotic output','রেকর্ড → ডিকোড → রোবটের সাড়া'),legend:[T('Recording sensor','রেকর্ডের সেন্সর'),T('Decoder','ডিকোডার'),T('Robotic hand','রোবট হাত')],note:T('A motor BCI records activity related to intended movement. A calibrated decoder maps selected signal features to a device command. This enlarged teaching model uses illustrative signals and fixed weights; it is not a medical device or a trained decoder. EEG and implanted sensors sample different signals.','মোটর বিসিআই চলনের ইচ্ছাসংশ্লিষ্ট কাজ রেকর্ড করে। ক্যালিব্রেট করা ডিকোডার সংকেতের বৈশিষ্ট্যকে যন্ত্রের নির্দেশে বদলায়। বড় করা এই শিক্ষামূলক মডেলে উদাহরণের সংকেত ও স্থির ওজন আছে; এটি চিকিৎসার যন্ত্র বা প্রশিক্ষিত ডিকোডার নয়। ইইজি ও প্রতিস্থাপিত সেন্সর ভিন্ন সংকেত মাপে।')},
  haircell:{title:T('Inside cochlear transduction','ককলিয়ায় সংকেত তৈরির ভেতর'),scale:T('Bundle deflection → hair-cell potential → auditory afferent','গুচ্ছ বাঁকা → হেয়ার সেলের বিভব → শ্রবণ তন্তু'),legend:[T('Stereocilia bundle','স্টেরিওসিলিয়ার গুচ্ছ'),T('Hair-cell response','হেয়ার সেলের সাড়া'),T('Auditory afferent','শ্রবণ সংবেদী তন্তু')],note:T('Deflection toward the taller stereocilia increases mechanotransduction-channel opening. Current changes the hair cell’s graded potential; calcium entry at the base promotes transmitter release onto an auditory nerve ending. The hair cell’s receptor potential and the afferent’s action potentials are different signals.','উঁচু স্টেরিওসিলিয়ার দিকে বাঁকলে যান্ত্রিক-সংবেদী চ্যানেল বেশি খোলে। প্রবাহে হেয়ার সেলের ক্রমাগত বিভব বদলায়; গোড়ার ক্যালসিয়াম প্রবেশে শ্রবণ স্নায়ুতে রাসায়নিক মুক্ত হয়। হেয়ার সেলের বিভব ও তন্তুর অ্যাকশন পোটেনশিয়াল আলাদা সংকেত।')},
  spindle:{title:T('How a muscle senses stretch','পেশি যেভাবে প্রসারণ বোঝে'),scale:T('Muscle length → spindle ending → sensory feedback','পেশির দৈর্ঘ্য → স্পিন্ডলের প্রান্ত → সংবেদী ফিরতি তথ্য'),legend:[T('Muscle stretch','পেশির প্রসারণ'),T('Muscle spindle','মাসল স্পিন্ডল'),T('Sensory output','সংবেদী নির্দেশ')],note:T('A muscle spindle lies in parallel with the working muscle fibers. Stretch deforms its sensory ending, changing afferent activity. Golgi tendon organs are a separate tension sensor at the muscle–tendon junction.','কর্মরত পেশিতন্তুর সমান্তরালে মাসল স্পিন্ডল থাকে। প্রসারণে তার সংবেদী প্রান্ত বিকৃত হয় ও সংকেত বদলায়। পেশি-টেন্ডনের সংযোগে গলজি টেন্ডন অর্গান আলাদা টানসংবেদক।')},
  rhythm:{title:T('From cortical currents to a scalp recording','কর্টেক্সের প্রবাহ থেকে মাথার বাইরের রেকর্ড'),scale:T('Cortical tissue → electric field → EEG','কর্টেক্সের টিস্যু → বৈদ্যুতিক ক্ষেত্র → ইইজি'),legend:[T('Pyramidal neurons','পিরামিডাল নিউরন'),T('Combined activity','সম্মিলিত কাজ'),T('Electrode difference','ইলেকট্রোডের পার্থক্য')],note:T('Aligned dendrites let population currents add together. EEG mainly records the resulting postsynaptic field, filtered by tissue. This is a synthetic illustration, not a person’s EEG.','একই দিকে থাকা ডেনড্রাইটে কোষসমষ্টির প্রবাহ যোগ হয়। টিস্যুর প্রভাবে বদলানো পোস্টসিন্যাপটিক ক্ষেত্র ইইজিতে ধরা পড়ে। এটি শিক্ষামূলক সংকেত, কারও আসল ইইজি নয়।')},

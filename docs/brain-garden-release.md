@@ -2,6 +2,19 @@
 
 Production target: https://debasisnath.com/brain-garden/ on the existing `debasisnath` Netlify site.
 
+## Lesson routing and BCI correction
+
+The body-first guide exposed a problem in the shared lesson templates: 92 concepts contained the optic-nerve stage, including 88 unrelated lessons. Those 88 detours are removed. Full retinal-to-optic-nerve sequences remain in vision, visual cortex, reading and CN II lessons. Circadian and melatonin examples retain their relevant retinal input. Memory begins with memory processing, motor lessons with planning, and EEG with cortical activity. The event-related-potential lesson now explicitly uses an auditory example. Right-hemisphere teaching uses spatial attention and movement instead of an absent visual-stage focus.
+
+Mechanism selection follows the current stage instead of a broad topic default. For example, a skin receptor in a neuron lesson remains a skin receptor, and an auditory stage in an EEG lesson shows hearing. BCI follows intended movement, motor-cortical activity, recording, decoding, robotic output and feedback. Its new Three.js model shows an implanted array or scalp electrodes, input-feature bars, an electronic output cable and articulated robotic fingers. The fingers follow an illustrative fixed-weight decoder. BrainGate is linked as an additional primary source. Shared physiological mechanisms remain teaching examples, not complete simulations or independently modeled circuits for all 211 concepts.
+
+Validation:
+
+- All 26 permanent tests pass, including the four-lesson optic-pathway allowlist, BCI sequences, stage-based mechanism selection, bilingual guidance and portfolio rendering. The static Netlify build succeeds.
+- Actual body/brain GLTF integration checks all 211 guided entrances and their steps (1,311 in the updated curriculum), plus repeated transitions between all five BCI concepts. It checks finite geometry, brain targets, body-to-detail cameras, bounded decoder output, robotic-joint transforms, scalp/implant rebuilding and language preservation. Only WebGL rendering and orbit controls are substituted in that harness.
+- Separate browser checks inspect the recording array, decoder and moving hand in English and Bengali on mobile and desktop. The checked Bengali desktop view has no horizontal overflow or browser warnings/errors.
+- Publication overlays only Brain Garden files on the existing Netlify manifest. Paths are normalized to Netlify's lowercase manifest keys, including model-notice filenames. Published bytes are checked against all local Brain Garden assets; existing files outside that path are preserved.
+
 ## Full-body guided tour
 
 All 211 concepts now enter through the same full-body 3D view. A visible Start journey button begins a paced sequence: locate the organ or body part, magnify its mechanism or highlight the brain region, then return to the whole person at the end. A small body locator remains visible beside enlarged scenes. Back, Next, Pause, replay and a contextual sound-response choice support self-paced use. One short English/Bengali explanation appears at a time; technical carriers, sources and physiological qualifications stay in disclosures. Existing free exploration and isolated opaque brain anatomy remain accessible.

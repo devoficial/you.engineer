@@ -8,6 +8,8 @@ export function guideJourney(topic,concept){
 const pair=(en,bn)=>({en,bn});
 export const places={brain:pair('Brain','মস্তিষ্ক'),ear:pair('Ear','কান'),eye:pair('Eye','চোখ'),nose:pair('Nose','নাক'),mouth:pair('Mouth','মুখ'),neck:pair('Neck','ঘাড়'),spine:pair('Spinal cord','সুষুম্না'),hand:pair('Hand & arm','হাত'),leg:pair('Leg','পা'),heart:pair('Heart','হৃৎপিণ্ড'),lungs:pair('Lungs','ফুসফুস'),gut:pair('Digestive organs','হজমের অঙ্গ'),kidney:pair('Kidneys','বৃক্ক'),adrenal:pair('Adrenal glands','অ্যাড্রিনাল গ্রন্থি'),mammary:pair('Mammary glands','স্তনগ্রন্থি'),blood:pair('Blood circulation','রক্তসঞ্চালন'),device:pair('Recording equipment','মাপার যন্ত্র')};
 export const simpleSteps={
+ 'bci-intent':['Try to move your hand','হাত নাড়ানোর চেষ্টা করো','Imagine trying to open your hand. Motor areas can create a useful activity pattern even when the hand cannot move.','হাত খোলার চেষ্টা কল্পনা করো। হাত নড়তে না পারলেও মোটর অঞ্চলে কাজে লাগার মতো সংকেত তৈরি হতে পারে।'],
+ 'bci-feedback':['Use the result to try again','ফল দেখে আবার চেষ্টা করো','Watch what the device does. You can adjust your next command using this feedback.','যন্ত্র কী করে দেখো। এই ফিরতি তথ্য দিয়ে পরের নির্দেশ বদলাতে পারো।'],
  sound:['A sound reaches your ear','শব্দ তোমার কানে পৌঁছায়','A doorbell makes tiny changes in air pressure. These vibrations enter the ear canal.','দরজার ঘণ্টা বাতাসের চাপে ছোট পরিবর্তন তৈরি করে। সেই কম্পন কানের পথে ঢোকে।'],
  ossicles:['Three tiny bones pass it on','তিনটি ছোট হাড় কম্পন পাঠায়','The eardrum vibrates. Three tiny bones carry that movement to the inner ear.','কানের পর্দা কাঁপে। তিনটি ছোট হাড় সেই কম্পন ভেতরের কানে পাঠায়।'],
  hair:['Movement becomes a message','কম্পন থেকে সংকেত','Inside the cochlea, tiny bundles on hair cells bend. This changes their electrical activity and helps them pass a message to a nerve.','ককলিয়ার হেয়ার সেলের ছোট গুচ্ছ বাঁকে। এতে কোষের বৈদ্যুতিক কাজ বদলায় এবং স্নায়ুতে সংকেত যায়।'],
@@ -694,6 +696,7 @@ Object.assign(simpleSteps,{
  ]
 });
 export function guideNote(journey,step,lang='en'){
+ if(step.guide)return {title:step.guide.title[lang],text:step.guide.text[lang]};
  const custom=step.process===journey.concept.body?null:simpleSteps[step.id];if(custom)return {title:custom[lang==='bn'?1:0],text:custom[lang==='bn'?3:2]};
  const first=step.process?.[lang]?.match(lang==='bn'?/^.*?[।!?](?:\s|$)/:/^.*?[.!?](?:\s|$)/)?.[0]?.trim()||step.process?.[lang]||journey.concept.body[lang];return {title:step.name[lang],text:first};
 }
