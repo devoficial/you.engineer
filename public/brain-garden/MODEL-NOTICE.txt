@@ -1,0 +1,23 @@
+Brain Garden anatomical model attribution
+
+brain.glb is redistributed unchanged from Rickaym/brain-game, commit
+ e4c2e6dc0df6976b33426f17c164c2c50c711587
+https://github.com/Rickaym/brain-game/tree/e4c2e6dc0df6976b33426f17c164c2c50c711587/public/models
+
+Ultimate origin: BodyParts3D, copyright The Database Center for Life Science.
+Licensed under Creative Commons Attribution-ShareAlike 2.1 Japan.
+https://creativecommons.org/licenses/by-sa/2.1/jp/
+https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html
+
+Intermediate source: zlatnaspirala/anatomy-system
+systems/optimisation-157/Nervous/cns/*.obj
+https://github.com/zlatnaspirala/anatomy-system
+
+Upstream changes: meshes re-meshed, merged, renamed and assembled as GLB.
+Brain Garden changes: no changes to distributed brain.glb bytes. At runtime,
+meshes are rotated from Z-up to Y-up, coloured, grouped and displaced for
+interaction. Unnamed 'segment-of-gyrus' fragments are omitted from the view.
+These model adaptations remain under CC BY-SA 2.1 Japan.
+All study groupings and colours are illustrative, not clinical parcellation.
+
+Three.js 0.180.0: MIT, license at vendor/THREE-LICENSE.txt.
