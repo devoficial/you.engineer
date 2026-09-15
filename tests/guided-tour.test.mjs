@@ -58,3 +58,16 @@ test('the full-body asset contains finite indexed anatomical surfaces and redist
 test('concept-specific explanations survive the shared journey template',()=>{
  for(const [id,concept,stage,word] of [['frequencies','delta','analyze','deep non-REM sleep'],['chemistry','dopamine','modulator','motivation'],['imaging','mri','measurement','magnetic']]){const topic=topics.find(t=>t.id===id),item=topic.items.find(c=>c.id===concept),journey=guideJourney(topic,item);assert(guideNote(journey,journey.steps.find(s=>s.id===stage)).text.toLowerCase().includes(word.toLowerCase()));}
 });
+
+test('the teaching body has a neutral pelvis with no open gaps in the replacement surface',()=>{
+ const buffer=fs.readFileSync(new URL('../public/brain-garden/body/person.glb',import.meta.url));
+ const jsonLength=buffer.readUInt32LE(12),gltf=JSON.parse(buffer.subarray(20,20+jsonLength));
+ const primitive=gltf.meshes.find(mesh=>mesh.name==='skin').primitives[0];
+ const read=id=>{const a=gltf.accessors[id],view=gltf.bufferViews[a.bufferView],start=buffer.byteOffset+28+jsonLength+(view.byteOffset||0)+(a.byteOffset||0);return new (a.componentType===5126?Float32Array:Uint32Array)(buffer.buffer,start,a.count*(a.type==='VEC3'?3:1));};
+ const positions=read(primitive.attributes.POSITION),indices=read(primitive.indices),edges=new Map();
+ let centralVertices=0;
+ for(let i=0;i<positions.length;i+=3)if(Math.abs(positions[i])<.15&&positions[i+1]>3.45&&positions[i+1]<3.95){centralVertices++;assert(positions[i+2]<.36,'External genital protrusion must not return on rebuild');}
+ assert(centralVertices>100,'Keep a continuous mannequin surface');
+ for(let i=0;i<indices.length;i+=3)for(let e=0;e<3;e++){const a=indices[i+e],b=indices[i+(e+1)%3],key=[Math.min(a,b),Math.max(a,b)].join(',');edges.set(key,(edges.get(key)||0)+1);}
+ for(const [edge,count] of edges)if(edge.split(',').every(i=>Math.abs(positions[i*3])<.2&&positions[i*3+1]>3.4&&positions[i*3+1]<4.1&&positions[i*3+2]>0))assert.equal(count,2,'The neutral front surface must have no exposed holes or overlapping faces');
+});

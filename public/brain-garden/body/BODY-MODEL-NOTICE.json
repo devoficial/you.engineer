@@ -36,7 +36,7 @@
     "aorta": "28d0d9c89a5e607e29fa0f3932b3e6179bc134037ee4ed9290ccf7a0991cefde",
     "aortic-arch": "7f1bbd874b05ea618649bfd5a51ac2675523f419dd3e5f5e160d90f47bd413db"
   },
-  "adaptation": "OBJ surfaces triangulated, coordinates rotated from Z-up to Y-up, scaled to eight teaching units, normals recalculated, and packed as GLB. At runtime: illustrative coloring, head and torso cutaways, approximate brain placement, and illustrative response motion. These model adaptations remain CC BY-SA 2.1 Japan.",
+  "adaptation": "OBJ surfaces triangulated, coordinates rotated from Z-up to Y-up, and scaled to eight teaching units. External genital detail is replaced by a smooth neutral mannequin surface through local mesh relaxation, removal of the underlying skin lining, welding contracted vertices, and closing small surface gaps. Normals are recalculated and the result is packed as GLB. At runtime: illustrative coloring, head and torso cutaways, approximate brain placement, and illustrative response motion. These model adaptations remain CC BY-SA 2.1 Japan.",
   "rebuild": "node scripts/build-guide-body.mjs <directory of source OBJ files named using the source_files keys>",
   "schematics": "Lung envelopes, adrenal markers, nerves, signal routes, missing-structure locators and cellular close-ups are simplified teaching constructions. Route geometry is not a reconstruction of tracts or vessels. Enlarged views use a different scale. Step order highlights a path through systems that can operate in parallel. Motion and playback timing are illustrative."
 }
