@@ -7,3 +7,4 @@
 @media(max-width:760px){.tour-viewport[data-scale=micro]:before,.tour-viewport[data-scale=brain]:before{width:80px}.tour-inset-label{max-width:65px}.tour-readout{left:88px;right:8px;padding:7px;bottom:37px}.tour-readout svg{height:66px}.tour-readout>span{font-size:10px}.tour-start{padding:8px 10px;font-size:12px}.guided-tour[data-state=intro] .tour-heading{align-items:center}.guided-tour[data-state=intro] .tour-title{font-size:19px}.guided-tour[data-state=intro] .tour-eyebrow{font-size:11px}}
 
 @media(max-width:760px){.guided-tour[data-state=step] .tour-heading{padding:11px 16px}.guided-tour[data-state=step] .tour-eyebrow{display:none}.guided-tour[data-state=step] .tour-title{font-size:18px}.guided-tour[data-state=step] .tour-viewport{height:clamp(255px,44svh,350px)}}
+.tour-start:hover{background:#215f87;color:#fff;border-color:#215f87}
