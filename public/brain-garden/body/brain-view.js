@@ -51,11 +51,14 @@ export class PathwayBrain{
  toggleInner(){this.innerOverride=!this.inner;if(this.steps)this.select(this.steps,this.index);this.checkView()}
  checkView(){const changed=Boolean(this.innerOverride!==null||this.homePosition&&this.camera.position.distanceTo(this.homePosition)>.08);if(changed!==this.viewChanged){this.viewChanged=changed;this.host.dispatchEvent(new CustomEvent('brain-view-changed'))}}
  reset(){if(this.failed)return;this.cameraGoal=null;this.camera.position.copy(this.homePosition||new THREE.Vector3(5.2,2,4.2));this.controls.target.set(0,0,0);this.innerOverride=null;if(this.steps)this.select(this.steps,this.index);this.controls.update();this.viewChanged=false;this.host.dispatchEvent(new CustomEvent('brain-view-changed'))}
- frame(now){
-  if(!this.active||this.failed||document.hidden||!this.host.clientWidth){this.lastFrame=0;return}const dt=this.lastFrame?Math.min(.05,(now-this.lastFrame)/1000):0;this.lastFrame=now;const motion=this.running;if(motion)this.motionTime+=dt;
-  if(this.cameraGoal){this.camera.position.lerp(this.cameraGoal,1-Math.exp(-dt*5));if(this.camera.position.distanceTo(this.cameraGoal)<.015){this.camera.position.copy(this.cameraGoal);this.cameraGoal=null}}
-  this.controls.update();if(this.marker)this.marker.position.copy(this.curve.getPoint((this.motionTime*.25)%1));if(this.signalTrain){const dummy=new THREE.Object3D();for(let i=0;i<7;i++){dummy.position.copy(this.curve.getPoint((this.motionTime*.25+i/7)%1));dummy.updateMatrix();this.signalTrain.setMatrixAt(i,dummy.matrix)}this.signalTrain.instanceMatrix.needsUpdate=true}
+ advance(dt,motion=this.running){if(motion)this.motionTime+=dt;
+  if(this.marker)this.marker.position.copy(this.curve.getPoint((this.motionTime*.25)%1));if(this.signalTrain){const dummy=new THREE.Object3D();for(let i=0;i<7;i++){dummy.position.copy(this.curve.getPoint((this.motionTime*.25+i/7)%1));dummy.updateMatrix();this.signalTrain.setMatrixAt(i,dummy.matrix)}this.signalTrain.instanceMatrix.needsUpdate=true}
   this.meshes.filter(m=>matches(m,this.step)).forEach(m=>m.material.emissiveIntensity=.2+(motion?.12*(.5+.5*Math.sin(this.motionTime*3)):0));
+ }
+ frame(now){
+  if(!this.active||this.failed||document.hidden||!this.host.clientWidth){this.lastFrame=0;return}const dt=this.lastFrame?Math.min(.05,(now-this.lastFrame)/1000):0;this.lastFrame=now;
+  if(this.cameraGoal){this.camera.position.lerp(this.cameraGoal,1-Math.exp(-dt*5));if(this.camera.position.distanceTo(this.cameraGoal)<.015){this.camera.position.copy(this.cameraGoal);this.cameraGoal=null}}
+  this.controls.update();this.advance(dt,this.running);
   this.camera.updateMatrixWorld();const boxes=[];for(const l of this.routeLabels){l.element.textContent=this.steps[l.index].name[document.documentElement.lang==='bn'?'bn':'en'];const p=l.position.clone().project(this.camera),w=this.host.clientWidth,h=this.host.clientHeight;let x=THREE.MathUtils.clamp((p.x*.5+.5)*w,85,w-85),y=THREE.MathUtils.clamp((-p.y*.5+.5)*h+(l.current?-60:25),15,h-42);if(boxes.some(b=>Math.abs(b.x-x)<165&&Math.abs(b.y-y)<40))y+=48;boxes.push({x,y});l.element.style.left=x+'px';l.element.style.top=y+'px';l.element.hidden=p.z>1||p.z<-1}
   this.renderer.render(this.scene,this.camera);
  }

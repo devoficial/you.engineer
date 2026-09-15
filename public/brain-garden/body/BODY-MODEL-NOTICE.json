@@ -1,0 +1,42 @@
+{
+  "asset": "person.glb",
+  "title": "Brain Garden full-body anatomical surfaces",
+  "copyright": "BodyParts3D © The Database Center for Life Science",
+  "license": "Creative Commons Attribution-ShareAlike 2.1 Japan",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.1/jp/",
+  "original_license": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+  "source_repository": "https://github.com/zlatnaspirala/anatomy-system",
+  "source_commit": "a2bab7185126109f6fa3bed61408e9a4226df6b9",
+  "source_root": "systems/optimisation-157/",
+  "source_files": {
+    "skin": "integumentary_system/skin.obj",
+    "heart": "Cardiovascular/hart/wall of cardiac chamber.obj",
+    "left-atrium": "Cardiovascular/hart/wall of left atrium.obj",
+    "right-atrium": "Cardiovascular/hart/wall of right atrium.obj",
+    "stomach": "Digestive/stomach.obj",
+    "left-kidney": "Urinary/left kidney.obj",
+    "right-kidney": "Urinary/right kidney.obj",
+    "trachea": "Respiratory/trachea.obj",
+    "left-bronchus": "Respiratory/left main bronchus.obj",
+    "right-bronchus": "Respiratory/right main bronchus proper.obj",
+    "aorta": "Cardiovascular/hart/descending aorta.obj",
+    "aortic-arch": "Cardiovascular/hart/arch of aorta.obj"
+  },
+  "source_sha256": {
+    "skin": "01c3ca408cc0542257ebcb04cc2b7c9aecac2e84aacc39893a4701f5e25aeea8",
+    "heart": "1ba1d06936f88a1f0320bf8716be12f83d9cf470ffb5fc2dc94b427605d822a6",
+    "left-atrium": "264dd23b430798c8f487617880ff190639f183064f116a3f0462698531067c61",
+    "right-atrium": "915e5f924334aa7fb902fbcaa3cf0a1b35386d877becbc0e1554816e50848625",
+    "stomach": "80a490f04b88c0cffb6da9e03f8105a980010c888060b47a7cb24465f1759ace",
+    "left-kidney": "da6e2b86997c1cd21e047e0cfa32b114198aeb2e11b738ca2dd15a180ecbe5de",
+    "right-kidney": "0ac6139ca11de40a6d008b53cbba1bce82c2f7d9fd591f0e1649a147fbd709c1",
+    "trachea": "4cb9e837158f8bdffc2f3b82bb7c17839c0446d8564f377a9d45941e3eafb989",
+    "left-bronchus": "78f03501051f9afe13537fa50132d88673137ad9e57b0dcf9aa3a3ba537a530e",
+    "right-bronchus": "c7cddb9669c6cf8317d94758b6f03878e545782557ed1e4b99dffdb9b6842de9",
+    "aorta": "28d0d9c89a5e607e29fa0f3932b3e6179bc134037ee4ed9290ccf7a0991cefde",
+    "aortic-arch": "7f1bbd874b05ea618649bfd5a51ac2675523f419dd3e5f5e160d90f47bd413db"
+  },
+  "adaptation": "OBJ surfaces triangulated, coordinates rotated from Z-up to Y-up, scaled to eight teaching units, normals recalculated, and packed as GLB. At runtime: illustrative coloring, head and torso cutaways, approximate brain placement, and illustrative response motion. These model adaptations remain CC BY-SA 2.1 Japan.",
+  "rebuild": "node scripts/build-guide-body.mjs <directory of source OBJ files named using the source_files keys>",
+  "schematics": "Lung envelopes, adrenal markers, nerves, signal routes, missing-structure locators and cellular close-ups are simplified teaching constructions. Route geometry is not a reconstruction of tracts or vessels. Enlarged views use a different scale. Step order highlights a path through systems that can operate in parallel. Motion and playback timing are illustrative."
+}

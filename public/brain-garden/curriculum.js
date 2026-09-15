@@ -75,7 +75,7 @@ export function initCurriculum(api){
   params=Object.fromEntries(controlsFor(lesson.scene,lesson).map(c=>[c.id,c.value]));scene.set({scene:lesson.scene,nodes:lesson.nodes,lesson,params,lang,region:lesson.region});
   if(syncBrain){api.reassemble();api.selectRegion(lesson.region,false,null);if(mesh)api.selectRegion(lesson.region,true,mesh);else if(lesson.mesh)api.selectRegion(lesson.region,true,'group:'+lesson.mesh);else if(push&&lesson.scene==='brain')api.selectRegion(lesson.region,true,null);}
   if(lesson.scene==='neuron'){step={soma:1,axon:2,myelin:2,terminals:3}[item.id]||0;scene.setStep(step)}
-  setView(lesson.scene==='brain'&&!body.available?'brain':'lesson');renderText();route(push);
+  setView(!syncBrain||mesh||lesson.scene==='brain'&&!body.available?'brain':'lesson');renderText();route(push);
  }
  $('#topic-select').onchange=e=>{openResults(false);selectTopic(e.target.value,null,true)};$('#concept-select').onchange=e=>selectTopic(topic.id,e.target.value,true);$('#close-topics').onclick=()=>{openResults(false);$('#browse-topics').focus()};
  $('#topic-search').oninput=()=>openResults(true);$('#topic-search').onkeydown=e=>{if(e.key==='Escape')openResults(false);if(e.key==='Enter'){const result=searchTopics($('#topic-search').value,family)[0];if(result){selectTopic(result.topic.id,result.items[0].id,true);openResults(false)}}};

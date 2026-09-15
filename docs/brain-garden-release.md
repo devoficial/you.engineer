@@ -2,6 +2,21 @@
 
 Production target: https://debasisnath.com/brain-garden/ on the existing `debasisnath` Netlify site.
 
+## Full-body guided tour
+
+All 211 concepts now enter through the same full-body 3D view. A visible Start journey button begins a paced sequence: locate the organ or body part, magnify its mechanism or highlight the brain region, then return to the whole person at the end. A small body locator remains visible beside enlarged scenes. Back, Next, Pause, replay and a contextual sound-response choice support self-paced use. One short English/Bengali explanation appears at a time; technical carriers, sources and physiological qualifications stay in disclosures. Existing free exploration and isolated opaque brain anatomy remain accessible.
+
+The 2.4 MB body asset contains twelve anatomical surfaces adapted from BodyParts3D: skin, cardiac walls, stomach, kidneys, trachea, bronchi and aorta. Attribution, pinned source paths, source hashes and conversion instructions are in `public/brain-garden/body/BODY-MODEL-NOTICE.json`; the adapted model remains CC BY-SA 2.1 Japan. Skin stays opaque with explicit head and torso cutaways. Lung envelopes, nerves, routes, adrenal markers and enlarged mechanisms are teaching constructions. Camera scale changes are labeled. This is a sequence of teaching examples, not a complete biological simulation or a claim that shared templates are unique pathways for each concept.
+
+Neural, spinal-reflex, hormonal, circulatory and device routes have distinct routing rules. Withdrawal uses the spinal circuit without first visiting the cortex. Hormone routes pass through blood toward their target organs. EEG recording stages include a live illustrative trace with units and slowed playback. Missing brain structures use the existing approximate locators instead of assigning an unrelated surface.
+
+Validation for this update:
+
+- Twenty-two permanent curriculum, physiology, numerical and guided-tour tests cover all 211 concepts, both languages, route direction, anatomical targets, captions, pacing and finite body-model geometry.
+- The actual-GLTF integration harness checks 1,635 guided stages, body-first entry, pacing, camera continuity, branch decisions, completion/replay, language preservation, hidden-view pause and the EEG readout. Its WebGL renderer and OrbitControls are substituted; real browser checks separately inspect rendering.
+- Browser QA covers mobile and desktop, the full-body entrance, hearing close-ups and named brain relays, delta-wave recording, Bengali regulation and anatomy. Existing Hindi video previews remain unchanged.
+- The static Netlify build and portfolio rendering checks are required before publication. Deployment preserves the existing domain's other files and verifies published asset hashes.
+
 ## Detailed Three.js mechanism update
 
 The primary lesson now switches between a mechanism close-up and the anatomical brain pathway. Eleven shared, interactive 3D models show cortical populations and EEG recording, a myelinated neuron, chemical synapses, electrical gap junctions, cochlear mechanics, hair-cell transduction, retinal optics, skin receptors, muscle spindles, motor end plates and muscle fibers, and vascular transport. These models are selected by the current journey stage. They replace the generic node-chain presentation; the optional numerical charts remain available.

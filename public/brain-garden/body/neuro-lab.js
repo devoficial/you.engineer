@@ -261,12 +261,15 @@ export class NeuroLab{
   html+='<path d="'+build()+'" class="trace-signal"/><text x="2" y="'+(y(ticks[0])+4)+'">'+(ticks[0]>0?'+':'')+ticks[0]+'</text><text x="7" y="'+(y(ticks[1])+4)+'">'+ticks[1]+'</text><text x="2" y="'+(y(ticks[2])+4)+'">'+ticks[2]+'</text><text x="40" y="141">0</text><text x="385" y="141">'+(rhythm?'1 s':this.kind==='neuron'?'5 ms':'50 ms')+'</text><text x="724" y="141">'+(rhythm?'2 s':this.kind==='neuron'?'10 ms':'100 ms')+'</text>';
   svg.innerHTML=html;svg.setAttribute('aria-label',text(rhythm?'Synthetic EEG trace; frequency '+this.frequency+' hertz and timing alignment '+Math.round(this.alignment*100)+' percent.':'Illustrative membrane-voltage trace.',rhythm?'শিক্ষামূলক ইইজি রেখা; কম্পাঙ্ক '+this.frequency+' হার্টজ।':'ঝিল্লির বিভবের শিক্ষামূলক রেখা।',this.lang));
  }
- frame(now){
-  if(!this.active||this.failed||document.hidden||!this.stage.clientWidth){this.last=0;return}const dt=this.last?Math.min(.05,(now-this.last)/1000):0;this.last=now;if(this.running)this.clock+=dt;
-  if(this.cameraGoal){const amount=1-Math.exp(-dt*6);this.camera.position.lerp(this.cameraGoal,amount);this.controls.target.lerp(this.targetGoal,amount);if(this.camera.position.distanceTo(this.cameraGoal)<.012){this.camera.position.copy(this.cameraGoal);this.controls.target.copy(this.targetGoal);this.cameraGoal=null;this.targetGoal=null}}this.controls.update();this.camera.updateMatrixWorld();this.group?.updateMatrixWorld();const t=this.clock;
+ advance(dt,running=this.running){if(running)this.clock+=dt;const t=this.clock;
   this.cells.forEach((cell,i)=>{const phase=this.kind==='rhythm'?TAU*this.frequency*t/8+TAU*i/Math.max(1,this.cells.length)*(1-this.alignment):t*2-i*.4;const intensity=.1+.55*(.5+.5*Math.sin(phase));cell.material.emissiveIntensity=intensity;cell.soma.material.emissive.set(C.input);cell.soma.material.emissiveIntensity=intensity*.45});
   this.animations.forEach(fn=>fn(t));const dummy=new THREE.Object3D();
   this.flows.forEach(f=>{for(let i=0;i<f.count;i++){const u=((t*f.speed+i/f.count+f.offset)%1+1)%1;dummy.position.copy(f.curve.getPoint(u));dummy.scale.setScalar(.65+.35*Math.sin(u*Math.PI));dummy.updateMatrix();f.mesh.setMatrixAt(i,dummy.matrix)}f.mesh.instanceMatrix.needsUpdate=true});
+ }
+ frame(now){
+  if(!this.active||this.failed||document.hidden||!this.stage.clientWidth){this.last=0;return}const dt=this.last?Math.min(.05,(now-this.last)/1000):0;this.last=now;
+  if(this.cameraGoal){const amount=1-Math.exp(-dt*6);this.camera.position.lerp(this.cameraGoal,amount);this.controls.target.lerp(this.targetGoal,amount);if(this.camera.position.distanceTo(this.cameraGoal)<.012){this.camera.position.copy(this.cameraGoal);this.controls.target.copy(this.targetGoal);this.cameraGoal=null;this.targetGoal=null}}this.controls.update();this.camera.updateMatrixWorld();this.group?.updateMatrixWorld();
+  this.advance(dt);
   this.renderer.render(this.scene,this.camera);this.projectLabels();
   if(!this.lastTrace||now-this.lastTrace>66){this.drawTrace();this.lastTrace=now}
  }

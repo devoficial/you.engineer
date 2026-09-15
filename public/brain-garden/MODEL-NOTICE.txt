@@ -21,3 +21,14 @@ These model adaptations remain under CC BY-SA 2.1 Japan.
 All study groupings and colours are illustrative, not clinical parcellation.
 
 Three.js 0.180.0: MIT, license at vendor/THREE-LICENSE.txt.
+
+Full-body guide model: body/person.glb
+BodyParts3D © The Database Center for Life Science, CC BY-SA 2.1 Japan.
+Adapted from zlatnaspirala/anatomy-system at commit
+a2bab7185126109f6fa3bed61408e9a4226df6b9.
+Source paths, hashes, conversion instructions and runtime changes are listed
+in body/BODY-MODEL-NOTICE.json. The adapted body asset is CC BY-SA 2.1 Japan.
+Skin, cardiac walls, stomach, kidneys, trachea, main bronchi and aortic
+surfaces are anatomical source meshes. Lung envelopes, nerves, routes and
+adrenal markers are teaching schematics. The body and brain are aligned
+approximately for teaching; magnified scenes use different scales.
