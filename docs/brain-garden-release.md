@@ -2,6 +2,25 @@
 
 Production target: https://debasisnath.com/brain-garden/ on the existing `debasisnath` Netlify site.
 
+## Detailed Three.js mechanism update
+
+The primary lesson now switches between a mechanism close-up and the anatomical brain pathway. Eleven shared, interactive 3D models show cortical populations and EEG recording, a myelinated neuron, chemical synapses, electrical gap junctions, cochlear mechanics, hair-cell transduction, retinal optics, skin receptors, muscle spindles, motor end plates and muscle fibers, and vascular transport. These models are selected by the current journey stage. They replace the generic node-chain presentation; the optional numerical charts remain available.
+
+- The frequency lessons now follow postsynaptic currents, timing alignment, electric fields through tissue, electrode difference and signal interpretation. A live synthetic waveform responds to frequency and phase alignment. The individual component and combined signal have separate keys; amplitude is not inferred solely from frequency. All cortical lobes remain context, avoiding a false single “delta location.”
+- Hearing moves from eardrum and ossicles through a pitch-sensitive cochlear response, an enlarged hair-cell bundle and auditory nerve output, then the named brainstem/thalamic/cortical relays. The cellular view distinguishes receptor potentials from afferent spikes. Muscle stretch feedback has its own spindle model, separate from the motor end plate.
+- Component tabs and labels focus the camera and reveal one explanation. Overview restores the full mechanism. Animation runs independently of the guided steps, with pause/play and reduced-motion support. Orbit/keyboard controls expose “Reset view” only after the view changes.
+- Brain pathways retain solid anatomical surfaces, with active/previous labels, animated schematic connections and an automatic camera move to the active region. The pathway has its own motion pause control.
+- New geometry is procedural teaching geometry, not scanned organs, tractography or a complete physiological simulator. The original brain surfaces provide anatomical context. Time is slowed spatially; traces show explicitly synthetic values and units. Existing English/Bengali content and Hindi-preferred video previews remain intact.
+
+Scientific references include the [EEG atlas](https://www.ncbi.nlm.nih.gov/books/NBK390351/), [extracellular-field review](https://pmc.ncbi.nlm.nih.gov/articles/PMC4907333/) and [NIDCD hearing guide](https://www.nidcd.nih.gov/health/how-do-we-hear), alongside the existing journey sources.
+
+Validation:
+
+- Seventeen permanent curriculum, pathway and numerical-model tests pass, plus two portfolio rendering checks. The static Netlify build succeeds.
+- The actual-GLTF/Linkedom harness constructs all 211 concepts and visits all 1,599 journey stages, checking finite new geometry, preserved opaque selections and isolation, pathways, branches, language, videos and view switching. Additional checks cover animation pause/resume, component focus, parameter synchronization and the spindle model.
+- Real browser checks at 1280 px and 390 px cover the new model families, English/Bengali labels, focus controls, mobile overflow, view reset and scientific signal distinctions. Browser warning/error logs are empty in the checked preview. Renderer behavior is visually inspected separately from the integration harness, which substitutes WebGL and OrbitControls.
+- New moving particles use instancing; branching dendrites use merged geometry. Inactive views stop animating and the mechanism renderer is reused. Device-specific GPU performance has not been benchmarked.
+
 ## Focused experience and Hindi video update
 
 The main view now uses two compact selectors for topic and concept. Search and family filters open on demand. A lesson leads with its body/brain visual, playback controls and one current explanation. The full route, organ close-up, contextual notes and references use collapsed disclosures. Hearing response choices appear at the decision stage, where automatic playback pauses. Anatomy keeps its opaque, selectable surfaces and isolated view.
