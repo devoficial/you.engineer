@@ -39,7 +39,7 @@ function showFocus(){
 }
 function clearFocus(){state.focused=false;$('#focus-panel').hidden=true;$('.scene-grid').classList.remove('has-focus');highlight()}
 
-function highlight(){meshes.forEach(m=>{const yes=m.userData.region===state.selected;const h=m.userData.region===hover;m.material.emissive.set(m.material.color);m.material.emissiveIntensity=yes?.18:h?.10:0;m.material.roughness=yes?.63:.78;m.material.transparent=state.focused&&!yes;m.material.opacity=state.focused&&!yes?.22:1;m.material.depthWrite=!(state.focused&&!yes)})}
+function highlight(){meshes.forEach(m=>{const yes=m.userData.region===state.selected;const h=m.userData.region===hover;m.material.emissive.set(m.material.color);m.material.emissiveIntensity=yes?.18:h?.10:0;m.material.roughness=yes?.63:.78;m.material.transparent=false;m.material.opacity=1;m.material.depthWrite=true})}
 function setMode(value){state.mode=value;labels();viewport.style.cursor=value?'grab':'auto'}
 document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{state.lang=b.dataset.lang;labels()});$('#drag-mode').onclick=()=>setMode(!state.mode);
 function classify(n){
